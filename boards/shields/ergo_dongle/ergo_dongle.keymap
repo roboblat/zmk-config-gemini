@@ -29,30 +29,3 @@
     cmd2en-param = [ 5a 69 02 00 ];
 };
 
-/*
- * ---- WS2812B underglow (single LED) ----
- * Placed HERE (keymap, loads LAST) deliberately: YADS' board overlay sets
- * &spi2 to "disabled", and that overlay loads AFTER ergo_dongle.overlay - so an
- * enable in the overlay would be overridden. The keymap is processed last, so
- * our status="okay" wins.
- *
- * nRF52840 serial instances: i2c0=trackpad, i2c1=YADS(ambient), spi3=display.
- * Instance 2 (spi2) is the only free one, and YADS leaves it disabled, so we
- * use it. Data pin = D4 (gpio0 4). Wire: DIN->D4, VCC->3V3, GND->GND.
- */
-#include <dt-bindings/led/led.h>
-
-/ {
-    led_strip: ws2812 {
-        compatible = "worldsemi,ws2812-gpio";
-        chain-length = <1>;
-        gpios = <&gpio0 4 0>; /* D4 is P0.04 */
-        color-mapping = <LED_COLOR_ID_GREEN LED_COLOR_ID_RED LED_COLOR_ID_BLUE>;
-    };
-};
-
-/ {
-    chosen {
-        zmk,underglow = &led_strip;
-    };
-};
