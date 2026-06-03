@@ -1,0 +1,104 @@
+/*
+ * RIGHT half = split PERIPHERAL (dongle is the central now).
+ * Occupies logical columns 5..10, so the shared transform is shifted by 5.
+ *
+ * The trackpad (tps43) is on THIS peripheral, so it must be relayed to the
+ * dongle. We point the shared tps43_split (a zmk,input-split) at the real
+ * device and attach the direction/scaler processors HERE (per ZMK's split-
+ * pointing docs, processors go on the input-split on the peripheral). The
+ * dongle enables the matching trackpad_listener.
+ */
+
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/pinctrl/nrf-pinctrl.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <dt-bindings/zmk/input_transform.h>
+#include <input/processors.dtsi>   /* zip_xy_scaler / zip_scroll_scaler */
+#include "ergo.dtsi"
+
+/* Shift this half into logical columns 5..10. */
+&default_transform {
+    col-offset = <5>;
+};
+
+&i2c0 {
+    mcp23008: mcp23008@20 {
+        compatible = "microchip,mcp23008";
+        status = "okay";
+        reg = <0x20>;
+        gpio-controller;
+        #gpio-cells = <2>;
+    };
+
+    tps43: tps43@74 {
+        compatible = "azoteq,iqs5xx";
+        status = "okay";
+        reg = <0x74>;
+        rdy-gpios = <&gpio0 28 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        /* reset-gpios intentionally omitted: gpio0 2 is the encoder A pin
+           (encoder is defined in the shared ergo.dtsi). The IQS5xx resets
+           itself on power-up, so an explicit reset line isn't required. */
+
+        /* ---- All gestures this driver supports ---- */
+        one-finger-tap;              /* tap            -> left click  */
+        two-finger-tap;              /* two-finger tap -> right click */
+        press-and-hold;              /* hold + move    -> click & drag */
+        press-and-hold-time = <100>; /* +ms over tap time to engage drag */
+        scroll;                      /* two-finger vertical + horizontal scroll */
+
+        /* ---- Feel tuning (not raw speed - that's the scaler below) ---- */
+        stationary-threshold = <5>;  /* px a finger must move to count; raise to kill jitter */
+        bottom-beta = <5>;           /* 0 = smoothest/laggiest ... 255 = snappiest/jitteriest */
+    };
+};
+
+/*
+ * Point the shared input-split at the real trackpad, and attach the
+ * direction + sensitivity processors here. These run on the PERIPHERAL before
+ * the event is relayed, so the central receives already-corrected events.
+ *
+ * DIRECTION flags (same meaning as before):
+ *   INPUT_TRANSFORM_XY_SWAP  = swap X/Y (up<->right)
+ *   INPUT_TRANSFORM_X_INVERT = flip left/right
+ *   INPUT_TRANSFORM_Y_INVERT = flip up/down
+ * SENSITIVITY: scalers are <multiplier divisor>; 1 1 = 1.0x.
+ */
+&tps43_split {
+    status = "okay";
+    device = <&tps43>;
+    input-processors =
+        <&trackpad_transform (INPUT_TRANSFORM_X_INVERT)>,
+        <&zip_xy_scaler 1 1>,
+        <&trackpad_scroll_transform 0>,
+        <&zip_scroll_scaler 1 1>;
+};
+
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+    };
+
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        diode-direction = "col2row";
+        wakeup-source;
+
+        row-gpios
+            = <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 0: D3 */
+            , <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 1: D6 */
+            , <&gpio1 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 2: D8 */
+            , <&gpio1 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 3: D9 */
+            , <&gpio1 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 4: D10 */
+            , <&gpio1 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 5: D7 */
+            ;
+
+        col-gpios
+            = <&mcp23008 0 GPIO_ACTIVE_HIGH>
+            , <&mcp23008 1 GPIO_ACTIVE_HIGH>
+            , <&mcp23008 2 GPIO_ACTIVE_HIGH>
+            , <&mcp23008 3 GPIO_ACTIVE_HIGH>
+            , <&mcp23008 4 GPIO_ACTIVE_HIGH>
+            , <&mcp23008 5 GPIO_ACTIVE_HIGH>
+            ;
+    };
+};

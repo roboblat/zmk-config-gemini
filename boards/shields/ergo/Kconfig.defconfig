@@ -1,0 +1,21 @@
+# DONGLE MODE (zmk-config3): the dongle is the central. Neither half forces
+# the central role anymore - build.yaml's cmake-args set both halves to
+# peripheral. We only keep the keyboard name and split-enable here.
+#
+# (In the non-dongle repo, the RIGHT half was central for the trackpad. Here
+# that's handled by the dongle instead.)
+
+if SHIELD_ERGO_RIGHT
+
+config ZMK_KEYBOARD_NAME
+    # Must be <= 16 characters.
+    default "SquatchBox"
+
+endif
+
+if SHIELD_ERGO_LEFT || SHIELD_ERGO_RIGHT
+
+config ZMK_SPLIT
+    default y
+
+endif

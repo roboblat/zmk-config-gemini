@@ -1,0 +1,26 @@
+# DONGLE ARCHITECTURE (zmk-config3 test repo).
+# The XIAO dongle is the CENTRAL; both keyboard halves are PERIPHERALS.
+#
+#   ergo_dongle  -> central, USB to host, runs Studio, (screen later)
+#   ergo_left    -> peripheral  (cmake-args flip it off central)
+#   ergo_right   -> peripheral  (cmake-args flip it off central)
+#
+# Flash settings_reset to ALL THREE devices before flashing real firmware.
+include:
+  # --- Dongle (central) ---
+  - board: xiao_ble//zmk
+    shield: ergo_dongle dongle_screen
+    # Studio talks over USB to the dongle now (it's the central).
+    snippet: studio-rpc-usb-uart
+
+  # --- Keyboard halves, now PERIPHERALS ---
+  - board: xiao_ble//zmk
+    shield: ergo_left
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+  - board: xiao_ble//zmk
+    shield: ergo_right
+    cmake-args: -DCONFIG_ZMK_SPLIT=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
+
+  # --- Reset firmware for each device ---
+  - board: xiao_ble//zmk
+    shield: settings_reset

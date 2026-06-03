@@ -1,0 +1,8 @@
+name: zmk-keyboard-ergo
+build:
+  cmake: .
+  kconfig: Kconfig
+  settings:
+    board_root: .
+  depends:
+    - lvgl

@@ -1,0 +1,86 @@
+/*
+ * Physical layout for ZMK Studio - geometry from this board's KLE data.
+ * 61 entries to match the matrix transform 1:1 (53 real keys + 8 phantom).
+ * Positions are consumed in the SAME order as keymap binding positions 0..60.
+ *
+ * Phantom keys (the unpopulated right-hand matrix cells) are parked low/right
+ * (y >= 4.75) so they sit apart from the real keys instead of stacking in a
+ * corner.
+ *
+ * Coordinates affect ONLY the Studio picture, never scanning or the keymap.
+ * If a right-hand key shows one cell off, nudge its x/y on that line - the
+ * right half is row-major so a small mismatch is cosmetic and harmless.
+ */
+
+#include <physical_layouts.dtsi>
+
+/ {
+    ergo_physical_layout: ergo_physical_layout {
+        compatible = "zmk,physical-layout";
+        display-name = "Ergo";
+
+        keys =
+              <&key_physical_attrs 100 100    0   75 0 0 0>  /* L0 */
+            , <&key_physical_attrs 100 100  100   75 0 0 0>  /* L1 */
+            , <&key_physical_attrs 100 100  200   75 0 0 0>  /* L2 */
+            , <&key_physical_attrs 100 100  300    0 0 0 0>  /* L3 */
+            , <&key_physical_attrs 100 100  400   75 0 0 0>  /* L4 */
+            , <&key_physical_attrs 100 100  500   75 0 0 0>  /* L5 */
+            , <&key_physical_attrs 100 100    0  175 0 0 0>  /* L6 */
+            , <&key_physical_attrs 100 100  100  175 0 0 0>  /* L7 */
+            , <&key_physical_attrs 100 100  200  175 0 0 0>  /* L8 */
+            , <&key_physical_attrs 100 100  300  100 0 0 0>  /* L9 */
+            , <&key_physical_attrs 100 100  400  175 0 0 0>  /* L10 */
+            , <&key_physical_attrs 100 100  500  175 0 0 0>  /* L11 */
+            , <&key_physical_attrs 100 100    0  275 0 0 0>  /* L12 */
+            , <&key_physical_attrs 100 100  100  275 0 0 0>  /* L13 */
+            , <&key_physical_attrs 100 100  200  275 0 0 0>  /* L14 */
+            , <&key_physical_attrs 100 100  300  200 0 0 0>  /* L15 */
+            , <&key_physical_attrs 100 100  400  275 0 0 0>  /* L16 */
+            , <&key_physical_attrs 100 100  500  275 0 0 0>  /* L17 */
+            , <&key_physical_attrs 100 100    0  375 0 0 0>  /* L18 */
+            , <&key_physical_attrs 100 100  100  375 0 0 0>  /* L19 */
+            , <&key_physical_attrs 100 100  200  375 0 0 0>  /* L20 */
+            , <&key_physical_attrs 100 100  300  300 0 0 0>  /* L21 */
+            , <&key_physical_attrs 100 100  400  375 0 0 0>  /* L22 */
+            , <&key_physical_attrs 100 100  500  375 0 0 0>  /* L23 */
+            , <&key_physical_attrs 100 100  300  400 0 0 0>  /* L24 */
+            , <&key_physical_attrs 100 100 1100   75 0 0 0>  /* Y */
+            , <&key_physical_attrs 100 100 1200   75 0 0 0>  /* U */
+            , <&key_physical_attrs 100 100 1300    0 0 0 0>  /* I */
+            , <&key_physical_attrs 100 100 1400   75 0 0 0>  /* O */
+            , <&key_physical_attrs 100 100 1500   75 0 0 0>  /* MINUS */
+            , <&key_physical_attrs 100 100 1600   75 0 0 0>  /* DEL */
+            , <&key_physical_attrs 100 100 1100  175 0 0 0>  /* H */
+            , <&key_physical_attrs 100 100 1200  175 0 0 0>  /* J */
+            , <&key_physical_attrs 100 100 1300  100 0 0 0>  /* K */
+            , <&key_physical_attrs 100 100 1400  175 0 0 0>  /* L */
+            , <&key_physical_attrs 100 100 1500  175 0 0 0>  /* P */
+            , <&key_physical_attrs 100 100 1600  175 0 0 0>  /* BSPC */
+            , <&key_physical_attrs 100 100 1100  275 0 0 0>  /* N */
+            , <&key_physical_attrs 100 100 1200  275 0 0 0>  /* M */
+            , <&key_physical_attrs 100 100 1300  200 0 0 0>  /* COMMA */
+            , <&key_physical_attrs 100 100 1400  275 0 0 0>  /* DOT */
+            , <&key_physical_attrs 100 100 1500  275 0 0 0>  /* SEMI */
+            , <&key_physical_attrs 100 100 1600  275 0 0 0>  /* RET */
+            , <&key_physical_attrs 100 100 1100  375 0 0 0>  /* BSPC2 */
+            , <&key_physical_attrs 100 100 1200  375 0 0 0>  /* LEFT */
+            , <&key_physical_attrs 100 100 1300  300 0 0 0>  /* UP */
+            , <&key_physical_attrs 100 100 1400  375 0 0 0>  /* RIGHT */
+            , <&key_physical_attrs 100 100 1500  375 0 0 0>  /* FSLH */
+            , <&key_physical_attrs 100 100 1600  375 0 0 0>  /* RSHFT */
+            , <&key_physical_attrs 100 100 1100  550 0 0 0>  /* n49 (spacer; kept near board so Studio zoom stays usable) */
+            , <&key_physical_attrs 100 100 1200  550 0 0 0>  /* n50 (spacer; kept near board so Studio zoom stays usable) */
+            , <&key_physical_attrs 100 100 1300  550 0 0 0>  /* n51 (spacer; kept near board so Studio zoom stays usable) */
+            , <&key_physical_attrs 100 100 1300  400 0 0 0>  /* DOWN */
+            , <&key_physical_attrs 100 100 1400  550 0 0 0>  /* n53 (spacer; kept near board so Studio zoom stays usable) */
+            , <&key_physical_attrs 100 100 1500  550 0 0 0>  /* n54 (spacer; kept near board so Studio zoom stays usable) */
+            , <&key_physical_attrs 100 100  800  375 0 0 0>  /* MKP55 */
+            , <&key_physical_attrs 100 100  900  375 0 0 0>  /* MKP56 */
+            , <&key_physical_attrs 100 100 1000  375 0 0 0>  /* MKP57 */
+            , <&key_physical_attrs 100 100 1600  550 0 0 0>  /* n58 (spacer; kept near board so Studio zoom stays usable) */
+            , <&key_physical_attrs 100 100 1700  550 0 0 0>  /* n59 (spacer; kept near board so Studio zoom stays usable) */
+            , <&key_physical_attrs 100 100 1800  550 0 0 0>  /* n60 (spacer; kept near board so Studio zoom stays usable) */
+            ;
+    };
+};

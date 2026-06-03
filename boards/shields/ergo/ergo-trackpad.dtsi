@@ -1,0 +1,52 @@
+/*
+ * Shared trackpad split-relay nodes. Included by BOTH the right peripheral
+ * (which points the split at the real tps43) and the dongle/central (which
+ * enables the listener). Kept separate from ergo.dtsi so it can be included
+ * by the dongle WITHOUT pulling in ergo.dtsi's matrix transform (the dongle
+ * defines its own copy of that, which would collide).
+ */
+
+#include <dt-bindings/zmk/input_transform.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        tps43_split: tps43_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+            /* Disabled by default. Enabled on the RIGHT peripheral (which sets
+               its `device`) and on the dongle/central (which consumes it via
+               the listener). Left MUST leave it disabled - an enabled input-
+               split with no `device` fails a build assertion. */
+            status = "disabled";
+        };
+    };
+
+    /* Cursor movement transform */
+    trackpad_transform: trackpad_transform {
+        compatible = "zmk,input-processor-transform";
+        #input-processor-cells = <1>;
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+    };
+
+    /* Dedicated scroll transform */
+    trackpad_scroll_transform: trackpad_scroll_transform {
+        compatible = "zmk,input-processor-transform";
+        #input-processor-cells = <1>;
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_HWHEEL>;
+        y-codes = <INPUT_REL_WHEEL>;
+    };
+
+    /* Listener runs on the CENTRAL (dongle). Disabled here; dongle enables it. */
+    trackpad_listener: trackpad_listener {
+        compatible = "zmk,input-listener";
+        status = "disabled";
+        device = <&tps43_split>;
+    };
+};

@@ -1,0 +1,27 @@
+/*
+ * Shared encoder nodes. Included by the LEFT peripheral (where the encoder is
+ * physically wired) AND the dongle/central (which needs the keymap-sensors
+ * node to know a sensor exists and route rotation events relayed from the
+ * peripheral). Kept separate from ergo.dtsi so the dongle can include it
+ * without pulling in the matrix transform (which the dongle redefines).
+ *
+ * Per ZMK docs, peripheral sensor events are relayed to and processed on the
+ * central exactly like local sensors - but the central must have this
+ * keymap-sensors node, which is why it lives in this shared include.
+ */
+
+/ {
+    encoder0: encoder_0 {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio0 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        steps = <80>;
+        status = "disabled";   /* LEFT overlay enables it; dongle leaves disabled */
+    };
+
+    sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&encoder0>;
+        triggers-per-rotation = <20>;
+    };
+};

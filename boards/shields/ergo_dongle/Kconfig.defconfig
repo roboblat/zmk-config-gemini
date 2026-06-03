@@ -1,0 +1,48 @@
+if SHIELD_ERGO_DONGLE
+
+# Max 16 characters in keyboard name.
+config ZMK_KEYBOARD_NAME
+    default "SquatchBox"
+
+# The dongle is the CENTRAL now (both keyboard halves become peripherals).
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+config ZMK_SPLIT
+    default y
+
+# Two peripherals: left half + right half.
+config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
+    default 2
+
+# BT_MAX_CONN = peripherals (2) + desired BT profiles (5) = 7.
+config BT_MAX_CONN
+    default 7
+
+# Match BT_MAX_CONN.
+config BT_MAX_PAIRED
+    default 7
+
+# ZMK Studio runs on the dongle now (it's the central / USB host side).
+# The studio-rpc-usb-uart snippet in build.yaml adds the USB transport.
+config ZMK_STUDIO
+    default y
+
+# WORKAROUND for ZMK issue #3156: in a 2-peripheral dongle setup, peripheral
+# battery-level fetching causes ONE peripheral to connect but never finish
+# discovery, so it registers no key presses (exactly the "one half dead"
+# symptom). Disabling it makes both peripherals reliably work. Trade-off: no
+# per-half battery readout on the dongle/screen. Re-enable once #3156 is fixed.
+config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING
+    default n
+
+# The dongle is the central and must process the trackpad's pointing events
+# relayed from the right peripheral (via the shared input-split). Pointing +
+# input subsystem must be enabled here.
+config ZMK_POINTING
+    default y
+
+config INPUT
+    default y
+
+endif

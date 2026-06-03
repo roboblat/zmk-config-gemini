@@ -1,0 +1,55 @@
+/*
+ * LEFT half = split PERIPHERAL.
+ * Occupies logical columns 0..4, so col-offset stays at the default 0.
+ */
+
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/pinctrl/nrf-pinctrl.h>
+#include "ergo.dtsi"
+
+/* Encoder hardware is physically on THIS (left) half - enable it here.
+   The shared keymap-sensors node (in ergo-encoder.dtsi) relays rotations to
+   the dongle/central. */
+&encoder0 {
+    status = "okay";
+};
+
+&i2c0 {
+    mcp23008: mcp23008@20 {
+        compatible = "microchip,mcp23008";
+        status = "okay";
+        reg = <0x20>;
+        gpio-controller;
+        #gpio-cells = <2>;
+        /* ngpios is implied by the model name on Zephyr 4.x; do not set it. */
+    };
+};
+
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+    };
+
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        wakeup-source;
+        diode-direction = "col2row";
+
+        row-gpios
+            = <&gpio0 29 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            ;
+
+        col-gpios
+            = <&mcp23008 0 GPIO_ACTIVE_LOW>
+            , <&mcp23008 1 GPIO_ACTIVE_LOW>
+            , <&mcp23008 2 GPIO_ACTIVE_LOW>
+            , <&mcp23008 3 GPIO_ACTIVE_LOW>
+            , <&mcp23008 4 GPIO_ACTIVE_LOW>
+            ;
+    };
+};
