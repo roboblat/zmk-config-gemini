@@ -4,6 +4,8 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: AYM1607
       url-base: https://github.com/AYM1607
+    - name: badjeff
+      url-base: https://github.com/badjeff
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -11,6 +13,9 @@ manifest:
       import: app/west.yml
     - name: zmk-driver-azoteq-iqs5xx
       remote: AYM1607
+      revision: main
+    - name: zmk-pointing-acceleration
+      remote: badjeff
       revision: main
   self:
     path: config

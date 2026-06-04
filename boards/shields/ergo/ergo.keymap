@@ -197,5 +197,102 @@
                 &trans    &trans    &trans    &none     &none     &none
             >;
         };
+
+        dpi_1 {
+            display-name = "DPI 1";
+            bindings = <
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &none  &none  &none  &trans &none  &none
+                &trans &trans &trans &none  &none  &none
+            >;
+        };
+        dpi_2 {
+            display-name = "DPI 2";
+            bindings = <
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &none  &none  &none  &trans &none  &none
+                &trans &trans &trans &none  &none  &none
+            >;
+        };
+        dpi_3 {
+            display-name = "DPI 3";
+            bindings = <
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &none  &none  &none  &trans &none  &none
+                &trans &trans &trans &none  &none  &none
+            >;
+        };
+        dpi_4 {
+            display-name = "DPI 4";
+            bindings = <
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &none  &none  &none  &trans &none  &none
+                &trans &trans &trans &none  &none  &none
+            >;
+        };
+        dpi_5 {
+            display-name = "DPI 5";
+            bindings = <
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &none  &none  &none  &trans &none  &none
+                &trans &trans &trans &none  &none  &none
+            >;
+        };
+        dpi_6 {
+            display-name = "DPI 6";
+            bindings = <
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans
+                &none  &none  &none  &trans &none  &none
+                &trans &trans &trans &none  &none  &none
+            >;
+        };
     };
 };
