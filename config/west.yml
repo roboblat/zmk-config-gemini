@@ -4,8 +4,8 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: AYM1607
       url-base: https://github.com/AYM1607
-    - name: badjeff
-      url-base: https://github.com/badjeff
+    - name: oleksandrmaslov
+      url-base: https://github.com/oleksandrmaslov
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -15,7 +15,7 @@ manifest:
       remote: AYM1607
       revision: main
     - name: zmk-pointing-acceleration
-      remote: badjeff
+      remote: oleksandrmaslov
       revision: main
   self:
     path: config
