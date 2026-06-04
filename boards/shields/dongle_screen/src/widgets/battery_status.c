@@ -83,60 +83,47 @@ static bool is_peripheral_reconnecting(uint8_t source, uint8_t new_level)
 static void draw_battery(lv_obj_t *canvas, uint8_t level, bool usb_present)
 {
     lv_color_t fill_color;
-    if (level > 50)
-    {
-        fill_color = lv_palette_main(LV_PALETTE_GREEN);
+    if (level > 50) fill_color = lv_color_hex(0x00FF00); // Green
+    else if (level > 25) fill_color = lv_color_hex(0xFFFF00); // Yellow
+    else fill_color = lv_color_hex(0xFF0000); // Red
+
+    /* 1. Start with a completely black canvas */
+    lv_canvas_fill_bg(canvas, lv_color_black(), LV_OPA_COVER);
+
+    /* 2. Draw the White Outline */
+    for (int x = 1; x <= 100; x++) {
+        lv_canvas_set_px(canvas, x, 0, lv_color_white(), LV_OPA_COVER);
+        lv_canvas_set_px(canvas, x, 4, lv_color_white(), LV_OPA_COVER);
     }
-    else if (level > 25)
-    {
-        fill_color = lv_palette_main(LV_PALETTE_YELLOW);
-    }
-    else
-    {
-        fill_color = lv_palette_main(LV_PALETTE_RED);
-    }
+    // Left border
+    lv_canvas_set_px(canvas, 0, 1, lv_color_white(), LV_OPA_COVER);
+    lv_canvas_set_px(canvas, 0, 2, lv_color_white(), LV_OPA_COVER);
+    lv_canvas_set_px(canvas, 0, 3, lv_color_white(), LV_OPA_COVER);
+    // Right bump
+    lv_canvas_set_px(canvas, 101, 1, lv_color_white(), LV_OPA_COVER);
+    lv_canvas_set_px(canvas, 101, 2, lv_color_white(), LV_OPA_COVER);
+    lv_canvas_set_px(canvas, 101, 3, lv_color_white(), LV_OPA_COVER);
 
-    /* Fill background with white to create white outline and white charge body */
-    lv_canvas_fill_bg(canvas, lv_color_white(), LV_OPA_COVER);
+    if (level == 0) return; // Empty battery, just outline
 
-    lv_draw_rect_dsc_t rect_fill_dsc;
-    lv_draw_rect_dsc_init(&rect_fill_dsc);
-    rect_fill_dsc.bg_color = lv_color_black();
+    /* Calculate bounds for the filled regions */
+    int tail_end = level;
+    if (tail_end > 100) tail_end = 100;
 
-    /* Round corners */
-    lv_canvas_set_px(canvas, 0, 0, lv_color_black(), LV_OPA_COVER);
-    lv_canvas_set_px(canvas, 0, 4, lv_color_black(), LV_OPA_COVER);
-    lv_canvas_set_px(canvas, 101, 0, lv_color_black(), LV_OPA_COVER);
-    lv_canvas_set_px(canvas, 101, 4, lv_color_black(), LV_OPA_COVER);
+    int tail_start = tail_end - 7; // 8 pixels wide
+    if (tail_start < 1) tail_start = 1;
 
-    /* Black out empty space */
-    if (level <= 99)
-    {
-        int start_black = (level == 0) ? 1 : level;
-        for (int x = start_black; x <= 100; x++)
-        {
-            for (int y = 1; y < 4; y++)
-            {
-                lv_canvas_set_px(canvas, x, y, lv_color_black(), LV_OPA_COVER);
-            }
+    /* 3. Draw the White Body (left of the colored bar) */
+    for (int x = 1; x < tail_start; x++) {
+        for (int y = 1; y <= 3; y++) {
+            lv_canvas_set_px(canvas, x, y, lv_color_white(), LV_OPA_COVER);
         }
     }
 
-    /* Draw the 8-pixel colored moving bar at the leading edge */
-    if (level > 0)
-    {
-        int tail_end = (level == 100) ? 100 : (level - 1);
-        int tail_start = tail_end - 7;
-        if (tail_start < 1) {
-            tail_start = 1;
-        }
-
-        for (int x = tail_start; x <= tail_end; x++)
-        {
-            for (int y = 1; y < 4; y++)
-            {
-                lv_canvas_set_px(canvas, x, y, fill_color, LV_OPA_COVER);
-            }
+    /* 4. Draw the 8-pixel Colored Edge */
+    for (int x = tail_start; x <= tail_end; x++) {
+        for (int y = 1; y <= 3; y++) {
+            lv_canvas_set_px(canvas, x, y, fill_color, LV_OPA_COVER);
         }
     }
 }
