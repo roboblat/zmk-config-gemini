@@ -112,8 +112,8 @@
                 &none     &none     &none     &kp DOWN  &none     &none
                 /* Row 5: the 3 keys under the trackpad = mouse buttons.
                    (Restored to plain clicks while we isolate the auto-mouse-
-                   layer issue. MB1=left, MB2=right, MB3=middle.) */
-                &mkp MB2  &mkp MB3  &mkp MB1  &none     &none     &none
+                   layer issue. MB1=left, MB3=middle, MB2=right.) */
+                &mkp MB1  &mkp MB3  &mkp MB2  &none     &none     &none
             >;
 
             /* Encoder = SCROLL on base. Now uses the boosted scroll value above.
@@ -215,70 +215,6 @@
             >;
         };
         dpi_2 {
-            display-name = " ";
-            bindings = <
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &none  &none  &none  &trans &none  &none
-                &trans &trans &trans &none  &none  &none
-            >;
-        };
-        dpi_3 {
-            display-name = " ";
-            bindings = <
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &none  &none  &none  &trans &none  &none
-                &trans &trans &trans &none  &none  &none
-            >;
-        };
-        dpi_4 {
-            display-name = " ";
-            bindings = <
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &none  &none  &none  &trans &none  &none
-                &trans &trans &trans &none  &none  &none
-            >;
-        };
-        dpi_5 {
-            display-name = " ";
-            bindings = <
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans
-                &none  &none  &none  &trans &none  &none
-                &trans &trans &trans &none  &none  &none
-            >;
-        };
-        dpi_6 {
             display-name = " ";
             bindings = <
                 &trans &trans &trans &trans &trans &trans
