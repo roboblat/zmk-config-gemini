@@ -172,6 +172,30 @@
          * from ZMK Studio later without reflashing. Delete this line if you
          * truly want none.
          */
-        spare { status = "reserved"; };
+        mouse_layer {
+            display-name = "Mouse";
+            bindings = <
+                /* ============ LEFT ============ */
+                &trans    &trans    &trans    &trans    &trans    &trans
+                &trans    &trans    &trans    &trans    &trans    &trans
+                &trans    &trans    &trans    &trans    &trans    &trans
+                &trans    &trans    &trans    &trans    &trans    &trans
+                &trans
+
+                /* ============ RIGHT =========== */
+                /* Row 0 */
+                &trans    &trans    &trans    &trans    &trans    &trans
+                /* Row 1 */
+                &trans    &trans    &trans    &trans    &trans    &trans
+                /* Row 2 */
+                &trans    &trans    &trans    &trans    &trans    &trans
+                /* Row 3 */
+                &trans    &trans    &trans    &trans    &trans    &trans
+                /* Row 4: dead matrix slots stay &none; 52 falls through */
+                &none     &none     &none     &trans    &none     &none
+                /* Row 5: trackpad buttons fall through */
+                &trans    &trans    &trans    &none     &none     &none
+            >;
+        };
     };
 };
