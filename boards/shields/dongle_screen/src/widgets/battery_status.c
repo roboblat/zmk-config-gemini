@@ -83,9 +83,9 @@ static bool is_peripheral_reconnecting(uint8_t source, uint8_t new_level)
 static void draw_battery(lv_obj_t *canvas, uint8_t level, bool usb_present)
 {
     lv_color_t fill_color;
-    if (level > 50) fill_color = lv_color_hex(0x00FF00); // Green
-    else if (level > 25) fill_color = lv_color_hex(0xFFFF00); // Yellow
-    else fill_color = lv_color_hex(0xFF0000); // Red
+    if (level > 50) fill_color = lv_color_hex(0x4CAF50); // Material Green
+    else if (level > 25) fill_color = lv_color_hex(0xFFEB3B); // Material Yellow
+    else fill_color = lv_color_hex(0xF44336); // Material Red
 
     /* 1. Start with a completely black canvas */
     lv_canvas_fill_bg(canvas, lv_color_black(), LV_OPA_COVER);
