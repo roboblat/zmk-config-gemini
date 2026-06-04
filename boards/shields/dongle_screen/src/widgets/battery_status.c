@@ -82,14 +82,14 @@ static bool is_peripheral_reconnecting(uint8_t source, uint8_t new_level)
 
 static void draw_battery(lv_obj_t *canvas, uint8_t level, bool usb_present)
 {
-    /* Whole filled portion is colored by charge: green >=80, yellow 45-79,
-       red <=44. The unfilled portion is black. */
+    /* Whole filled portion is colored by charge: green >50, yellow 26-50,
+       red <=25. The unfilled portion is black. */
     lv_color_t fill_color;
-    if (level >= 80)
+    if (level > 50)
     {
         fill_color = lv_palette_main(LV_PALETTE_GREEN);
     }
-    else if (level >= 45)
+    else if (level > 25)
     {
         fill_color = lv_palette_main(LV_PALETTE_YELLOW);
     }
@@ -174,7 +174,12 @@ static void set_battery_symbol(lv_obj_t *widget, struct battery_state state)
         lv_obj_set_style_text_color(label, lv_palette_main(LV_PALETTE_RED), 0);
         lv_label_set_text(label, "X");
     }
-    else if (state.level <= 10)
+    else if (state.level <= 25)
+    {
+        lv_obj_set_style_text_color(label, lv_palette_main(LV_PALETTE_RED), 0);
+        lv_label_set_text_fmt(label, "%4u", state.level);
+    }
+    else if (state.level <= 50)
     {
         lv_obj_set_style_text_color(label, lv_palette_main(LV_PALETTE_YELLOW), 0);
         lv_label_set_text_fmt(label, "%4u", state.level);
