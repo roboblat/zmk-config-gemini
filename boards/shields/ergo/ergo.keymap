@@ -199,7 +199,7 @@
         };
 
         dpi_1 {
-            display-name = "DPI 1";
+            display-name = " ";
             bindings = <
                 &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans
@@ -215,7 +215,7 @@
             >;
         };
         dpi_2 {
-            display-name = "DPI 2";
+            display-name = " ";
             bindings = <
                 &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans
@@ -231,7 +231,7 @@
             >;
         };
         dpi_3 {
-            display-name = "DPI 3";
+            display-name = " ";
             bindings = <
                 &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans
@@ -247,7 +247,7 @@
             >;
         };
         dpi_4 {
-            display-name = "DPI 4";
+            display-name = " ";
             bindings = <
                 &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans
@@ -263,7 +263,7 @@
             >;
         };
         dpi_5 {
-            display-name = "DPI 5";
+            display-name = " ";
             bindings = <
                 &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans
@@ -279,7 +279,7 @@
             >;
         };
         dpi_6 {
-            display-name = "DPI 6";
+            display-name = " ";
             bindings = <
                 &trans &trans &trans &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans
