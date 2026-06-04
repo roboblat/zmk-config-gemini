@@ -82,7 +82,7 @@
         compatible = "zmk,keymap";
 
         default_layer {
-            display-name = "Base";
+            display-name = " ";
             /*
              * Bindings follow the combined transform in ergo.dtsi:
              * first the 25 LEFT positions, then the 36 RIGHT positions.
