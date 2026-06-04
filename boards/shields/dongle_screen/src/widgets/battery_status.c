@@ -82,8 +82,6 @@ static bool is_peripheral_reconnecting(uint8_t source, uint8_t new_level)
 
 static void draw_battery(lv_obj_t *canvas, uint8_t level, bool usb_present)
 {
-    /* Whole filled portion is colored by charge: green >50, yellow 26-50,
-       red <=25. The unfilled portion is black. */
     lv_color_t fill_color;
     if (level > 50)
     {
@@ -98,45 +96,46 @@ static void draw_battery(lv_obj_t *canvas, uint8_t level, bool usb_present)
         fill_color = lv_palette_main(LV_PALETTE_RED);
     }
 
-    /* Start the whole bar in the charge color, then black out the empty part. */
-    lv_canvas_fill_bg(canvas, fill_color, LV_OPA_COVER);
+    /* Fill background with white to create white outline and white charge body */
+    lv_canvas_fill_bg(canvas, lv_color_white(), LV_OPA_COVER);
 
     lv_draw_rect_dsc_t rect_fill_dsc;
     lv_draw_rect_dsc_init(&rect_fill_dsc);
     rect_fill_dsc.bg_color = lv_color_black();
 
+    /* Round corners */
     lv_canvas_set_px(canvas, 0, 0, lv_color_black(), LV_OPA_COVER);
     lv_canvas_set_px(canvas, 0, 4, lv_color_black(), LV_OPA_COVER);
     lv_canvas_set_px(canvas, 101, 0, lv_color_black(), LV_OPA_COVER);
     lv_canvas_set_px(canvas, 101, 4, lv_color_black(), LV_OPA_COVER);
 
-    if (level <= 99 && level > 0)
+    /* Black out empty space */
+    if (level <= 99)
     {
-        // Draw filled rectangle manually since lv_canvas_draw_rect doesn't exist in LVGL v8+
-        for (int x = level; x < 100; x++)
+        int start_black = (level == 0) ? 1 : level;
+        for (int x = start_black; x <= 100; x++)
         {
             for (int y = 1; y < 4; y++)
             {
                 lv_canvas_set_px(canvas, x, y, lv_color_black(), LV_OPA_COVER);
             }
         }
-        lv_canvas_set_px(canvas, 100, 1, lv_color_black(), LV_OPA_COVER);
-        lv_canvas_set_px(canvas, 100, 2, lv_color_black(), LV_OPA_COVER);
-        lv_canvas_set_px(canvas, 100, 3, lv_color_black(), LV_OPA_COVER);
     }
 
-    /* NEW: Black out the filled space behind the 5-pixel moving bar */
+    /* Draw the 8-pixel colored moving bar at the leading edge */
     if (level > 0)
     {
-        int tail_end = level - 5;
-        if (level >= 100) {
-            tail_end = 96;
+        int tail_end = (level == 100) ? 100 : (level - 1);
+        int tail_start = tail_end - 7;
+        if (tail_start < 1) {
+            tail_start = 1;
         }
-        for (int x = 1; x < tail_end; x++)
+
+        for (int x = tail_start; x <= tail_end; x++)
         {
             for (int y = 1; y < 4; y++)
             {
-                lv_canvas_set_px(canvas, x, y, lv_color_black(), LV_OPA_COVER);
+                lv_canvas_set_px(canvas, x, y, fill_color, LV_OPA_COVER);
             }
         }
     }
