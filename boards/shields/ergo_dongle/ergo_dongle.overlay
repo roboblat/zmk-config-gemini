@@ -77,35 +77,36 @@
         #input-processor-cells = <0>;
         acceleration-exponent = <1>; 
         time-to-max-speed-ms = <300>;
+        status = "disabled";
     };
 };
 
 &trackpad_listener {
     status = "okay";
-    input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 2 1>, <&trackpad_accel>;
+    input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 2 1>;
 
     dpi_1_override {
         layers = <3>;
-        input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 1 2>, <&trackpad_accel>;
+        input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 1 2>;
     };
     dpi_2_override {
         layers = <4>;
-        input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 1 1>, <&trackpad_accel>;
+        input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 1 1>;
     };
     dpi_3_override {
         layers = <5>;
-        input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 3 2>, <&trackpad_accel>;
+        input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 3 2>;
     };
     dpi_4_override {
         layers = <6>;
-        input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 2 1>, <&trackpad_accel>;
+        input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 2 1>;
     };
     dpi_5_override {
         layers = <7>;
-        input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 3 1>, <&trackpad_accel>;
+        input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 3 1>;
     };
     dpi_6_override {
         layers = <8>;
-        input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 4 1>, <&trackpad_accel>;
+        input-processors = <&zip_temp_layer 2 1500>, <&zip_xy_scaler 4 1>;
     };
 };
