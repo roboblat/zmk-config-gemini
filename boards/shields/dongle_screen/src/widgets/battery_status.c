@@ -83,9 +83,9 @@ static bool is_peripheral_reconnecting(uint8_t source, uint8_t new_level)
 static void draw_battery(lv_obj_t *canvas, uint8_t level, bool usb_present)
 {
     lv_color_t fill_color;
-    if (level > 50) fill_color = lv_color_hex(0x4CAF50); // Material Green
-    else if (level > 25) fill_color = lv_color_hex(0xFFEB3B); // Material Yellow
-    else fill_color = lv_color_hex(0xF44336); // Material Red
+    if (level > 50) fill_color = lv_color_hex(0x00FF00); // Bright Green (matches BLE)
+    else if (level > 25) fill_color = lv_color_hex(0xFFFF00); // Bright Yellow
+    else fill_color = lv_color_hex(0xFF0000); // Bright Red
 
     /* 1. Start with a completely black canvas */
     lv_canvas_fill_bg(canvas, lv_color_black(), LV_OPA_COVER);
@@ -167,18 +167,18 @@ static void set_battery_symbol(lv_obj_t *widget, struct battery_state state)
     }
     else
     {
-        lv_obj_set_style_text_color(label, lv_palette_main(LV_PALETTE_RED), 0);
+        lv_obj_set_style_text_color(label, lv_color_hex(0xFF0000), 0);
         lv_label_set_text(label, "X");
     }
 
     if (state.level < 1)
     {
-        lv_obj_set_style_text_color(label, lv_palette_main(LV_PALETTE_RED), 0);
+        lv_obj_set_style_text_color(label, lv_color_hex(0xFF0000), 0);
         lv_label_set_text(label, "X");
     }
     else if (state.level <= 10)
     {
-        lv_obj_set_style_text_color(label, lv_palette_main(LV_PALETTE_YELLOW), 0);
+        lv_obj_set_style_text_color(label, lv_color_hex(0xFFFF00), 0);
         lv_label_set_text_fmt(label, "%4u", state.level);
     }
     else
