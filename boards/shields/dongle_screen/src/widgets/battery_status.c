@@ -124,6 +124,22 @@ static void draw_battery(lv_obj_t *canvas, uint8_t level, bool usb_present)
         lv_canvas_set_px(canvas, 100, 2, lv_color_black(), LV_OPA_COVER);
         lv_canvas_set_px(canvas, 100, 3, lv_color_black(), LV_OPA_COVER);
     }
+
+    /* NEW: Black out the filled space behind the 5-pixel moving bar */
+    if (level > 0)
+    {
+        int tail_end = level - 5;
+        if (level >= 100) {
+            tail_end = 96;
+        }
+        for (int x = 1; x < tail_end; x++)
+        {
+            for (int y = 1; y < 4; y++)
+            {
+                lv_canvas_set_px(canvas, x, y, lv_color_black(), LV_OPA_COVER);
+            }
+        }
+    }
 }
 
 static void set_battery_symbol(lv_obj_t *widget, struct battery_state state)
@@ -174,12 +190,7 @@ static void set_battery_symbol(lv_obj_t *widget, struct battery_state state)
         lv_obj_set_style_text_color(label, lv_palette_main(LV_PALETTE_RED), 0);
         lv_label_set_text(label, "X");
     }
-    else if (state.level <= 25)
-    {
-        lv_obj_set_style_text_color(label, lv_palette_main(LV_PALETTE_RED), 0);
-        lv_label_set_text_fmt(label, "%4u", state.level);
-    }
-    else if (state.level <= 50)
+    else if (state.level <= 10)
     {
         lv_obj_set_style_text_color(label, lv_palette_main(LV_PALETTE_YELLOW), 0);
         lv_label_set_text_fmt(label, "%4u", state.level);
